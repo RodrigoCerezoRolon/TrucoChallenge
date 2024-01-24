@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->bigInteger('profile_id');
-            $table->rememberToken();
+            $table->bigInteger('player_id');
+            $table->date('start_date');
+            $table->date('finish_date');
+            $table->tinyInteger('points');
+            $table->boolean('is_winner');
+            $table->tinyInteger('amount_envido');
+            $table->tinyInteger('amount_flower');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('games');
     }
 };
