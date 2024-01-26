@@ -59,8 +59,8 @@ Una vez que hayas configurado el entorno, puedes iniciar el proyecto:
 php artisan serve
 ```
 
-Visita [http://localhost:8000](http://localhost:8000) en tu navegador para ver la aplicación.
-
+Visita [http://localhost:8000](http://localhost:8000) en tu navegador para ver la aplicación.  
+Visita [http://localhost:8000/api/documentation#/default](http://127.0.0.1:8000/api/documentation#/default) para ver la documentación de la API
 ¡Listo! Ahora la aplicación Truco debería estar ejecutándose en tu entorno local.
 
 ## Tecnologías Utilizadas
