@@ -13,4 +13,12 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        proxy: {
+          '/api': 'http://localhost' // Puedes configurar un proxy para las solicitudes API
+        },
+        hmr: {
+          overlay: false
+        }
+      }
 });

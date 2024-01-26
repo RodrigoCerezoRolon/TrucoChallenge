@@ -1,0 +1,58 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "L5 OpenApi",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "darius@matulionis.lt"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "summary": "Autenticación de usuario",
+                "operationId": "8dcb70df1020986038d098cc08d05dae",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "example": "admin@test.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Autenticación exitosa"
+                    },
+                    "401": {
+                        "description": "Error de autenticación"
+                    }
+                }
+            }
+        }
+    }
+}
