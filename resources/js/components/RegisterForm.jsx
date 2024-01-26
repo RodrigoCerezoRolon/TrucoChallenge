@@ -4,7 +4,7 @@ import { AuthContext } from '../context';
 import axios from 'axios';
 
 const RegisterForm = () => {
-    const { logout, authState } = useContext(AuthContext);
+    const { authState } = useContext(AuthContext);
     const [formError, setFormError] = useState(false);
     const [errorList, setErrorList] = useState();
     const [userCreated,setUserCreated]= useState(false);

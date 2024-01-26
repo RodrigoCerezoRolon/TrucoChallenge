@@ -5,6 +5,7 @@ import Dashboard from "../components/Dashboard"
 import RegisterForm from "../components/RegisterForm"
 import { PrivateRoute } from "./PrivateRoute"
 import Report from "../components/Report"
+import Game from "../components/Game"
 
 export const AppRouter = () => {
     return (
@@ -32,6 +33,7 @@ export const AppRouter = () => {
                             <Route path="dashboard" element={<Dashboard />} />
                             <Route path="register" element={<RegisterForm />} />
                             <Route path="reports" element={<Report/>}></Route>
+                            <Route path="game" element= {<Game/>}></Route>
                         </Route>
                     </Routes>
                 } />

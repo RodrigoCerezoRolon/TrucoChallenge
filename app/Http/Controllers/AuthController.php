@@ -124,6 +124,33 @@ class AuthController extends Controller
             'profile_id' => auth()->user()->profile_id
         ]);
     }
+    /**
+ * @OA\Post(
+ *     path="/api/auth/register",
+ *     summary="Registro de usuario",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"name", "email", "password", "profile_id"},
+ *             @OA\Property(property="name", type="string", example="John Doe"),
+ *             @OA\Property(property="email", type="email", example="john@example.com"),
+ *             @OA\Property(property="password", type="string", example="password"),
+ *             @OA\Property(property="profile_id", type="integer", example="1"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Usuario registrado exitosamente",
+ *     ),
+ *     @OA\Response(
+ *         response="422",
+ *         description="Error de validación",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="errors", type="object"),
+ *         )
+ *     )
+ * )
+ */
     public function register(Request $request)
     {
 
@@ -156,6 +183,38 @@ class AuthController extends Controller
             'profile_id' => $request->input('profile_id')
         ]);
     }
+  /**
+ * @OA\Post(
+ *     path="/api/auth/generateReport",
+ *     summary="Generar informe de juegos",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"start_date", "finish_date", "email"},
+ *             @OA\Property(property="start_date", type="string", example="2022-01-01"),
+ *             @OA\Property(property="finish_date", type="string", example="2022-01-10"),
+ *             @OA\Property(property="email", type="email", example="john@example.com"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Informe generado exitosamente",
+ *         @OA\JsonContent(
+ * @OA\Property(property="report", type="array", @OA\Items(type="object")),
+ *             @OA\Property(property="user", type="object"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="422",
+ *         description="Error de validación",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="errors", type="object"),
+ *         )
+ *     )
+ * )
+ */
+
+
     public function generateReport(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -197,5 +256,88 @@ class AuthController extends Controller
             'report' => $report,
             'user' => $playerSearched
         ];
+    }
+    /**
+ * @OA\Post(
+ *     path="/api/auth/createGame",
+ *     summary="Crear nuevo juego",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"player_id", "start_date", "finish_date", "points", "is_winner", "amount_envido", "amount_flower"},
+ *             @OA\Property(property="player_id", type="integer", example="1"),
+ *             @OA\Property(property="start_date", type="string", example="2022-01-01"),
+ *             @OA\Property(property="finish_date", type="string", example="2022-01-10"),
+ *             @OA\Property(property="points", type="integer", example="100"),
+ *             @OA\Property(property="is_winner", type="boolean", example="true"),
+ *             @OA\Property(property="amount_envido", type="integer", example="3"),
+ *             @OA\Property(property="amount_flower", type="integer", example="2"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Juego creado exitosamente",
+ *     ),
+ *     @OA\Response(
+ *         response="422",
+ *         description="Error de validación",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="errors", type="object"),
+ *         )
+ *     )
+ * )
+ */
+    public function createGame(Request $request){
+        $rules = [
+            'player_id' => 'required|integer',  
+            'start_date' => 'required',   
+            'finish_date' => 'required',  
+            'points' => 'required|integer',  
+            'is_winner' => 'required', 
+            'amount_envido' => 'required|integer',  
+            'amount_flower' => 'required|integer',  
+        ];
+        
+        $customMessages = [
+            'player_id.required' => 'El campo Jugador es obligatorio.',
+            'start_date.required' => 'El campo Fecha Inicio es obligatorio.',
+            'finish_date.required' => 'El campo Fecha Finalizacion es obligatorio.',
+            'points.required' => 'El campo puntos es obligatorio.',
+            'is_winner.required' => 'El campo Ganador es obligatorio.',
+            'amount_envido.required' => 'El campo Envido es obligatorio.',
+            'amount_flower.required' => 'El campo Flores es obligatorio.',
+        ];
+        
+        $validator = Validator::make($request->all(), $rules, $customMessages);
+        
+        // Lógica para manejar la validación
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        } else {
+            // La validación pasó, procede con la creación del modelo Game
+            return Game::create([
+                'player_id' => $request->input('player_id'),
+                'start_date' => $request->input('start_date'),
+                'finish_date' => $request->input('finish_date'),
+                'points' => $request->input('points'),
+                'is_winner' => $request->input('is_winner'),
+                'amount_envido' => $request->input('amount_envido'),
+                'amount_flower' => $request->input('amount_flower'),
+            ]);
+            
+        }
+    }
+    /**
+ * @OA\Get(
+ *     path="/api/auth/getPlayers",
+ *     summary="Obtener jugadores",
+ *     @OA\Response(
+ *         response="200",
+ *         description="Lista de jugadores",
+ *     )
+ * )
+ */
+    public function getPlayers(){
+        return User::select('id','name')->orderby('name',"ASC")->where('profile_id',1)->get();
     }
 }

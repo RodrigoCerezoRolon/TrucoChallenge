@@ -32,5 +32,7 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('register', [AuthController::class, 'register']);
     Route::post('report', [AuthController::class, 'generateReport']);
+    Route::post('games',[AuthController::class, 'createGame']);
+    Route::get('players',[AuthController::class, 'getPlayers']);
     Route::post('me', [AuthController::class, 'me']);
 });

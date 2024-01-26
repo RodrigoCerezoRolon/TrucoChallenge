@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from '../context';
-
+import 'bootstrap/dist/css/bootstrap.css';
 const Navbar = ({ user }) => {
     const { profile_id, name } = user;
     const { logout } = useContext(AuthContext);
-    const onLogOut = ()=>{
+    const onLogOut = () => {
         logout();
         Navigate('/login');
     }
     return (
         <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div className="container">
-                <a className="navbar-brand" href="/">
+                <a className="navbar-brand">
                     Truco API
                 </a>
                 <button
@@ -35,10 +35,16 @@ const Navbar = ({ user }) => {
 
                         </li>
                         {profile_id == 2 ? (
-                            <li className="nav-item dropdown">
-                                <Link className='nav-link' to={'/register'}>Alta Usuario</Link>
-                            </li>
-                        ):''}
+                            <>
+                                <li className="nav-item dropdown">
+                                    <Link className='nav-link' to={'/register'}>Alta Usuario</Link>
+                                </li>
+                                <li className="nav-item dropdown">
+                                    <Link className='nav-link' to={'/game'}>Registrar Partida</Link>
+                                </li>
+                            </>
+
+                        ) : ''}
 
                     </ul>
 
