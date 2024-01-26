@@ -43,7 +43,28 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Autenticación exitosa"
+                        "description": "Respuesta exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Error de autenticación"
@@ -91,7 +112,34 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Usuario registrado exitosamente"
+                        "description": "Usuario registrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "name",
+                                        "email",
+                                        "password",
+                                        "profile_id"
+                                    ],
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "email": {
+                                            "type": "email",
+                                            "example": "john@example.com"
+                                        },
+                                        "profile_id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Error de validación",
@@ -120,23 +168,83 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "start_date",
-                                    "finish_date",
-                                    "email"
-                                ],
                                 "properties": {
-                                    "start_date": {
-                                        "type": "string",
-                                        "example": "2022-01-01"
+                                    "report": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 78
+                                                },
+                                                "player_id": {
+                                                    "type": "integer",
+                                                    "example": 8
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "example": "1999-12-15"
+                                                },
+                                                "finish_date": {
+                                                    "type": "string",
+                                                    "example": "1993-04-05"
+                                                },
+                                                "points": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "is_winner": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "amount_envido": {
+                                                    "type": "integer",
+                                                    "example": 4
+                                                },
+                                                "amount_flower": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2024-01-24T23:59:56.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2024-01-24T23:59:56.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     },
-                                    "finish_date": {
-                                        "type": "string",
-                                        "example": "2022-01-10"
-                                    },
-                                    "email": {
-                                        "type": "email",
-                                        "example": "john@example.com"
+                                    "user": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 8
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "admin"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "admin@test.com"
+                                            },
+                                            "profile_id": {
+                                                "type": "integer",
+                                                "example": 2
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "example": "2024-01-25T00:47:05.000000Z"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "example": "2024-01-25T00:47:05.000000Z"
+                                            }
+                                        },
+                                        "type": "object"
                                     }
                                 },
                                 "type": "object"
@@ -239,7 +347,53 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Juego creado exitosamente"
+                        "description": "Juego creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "player_id",
+                                        "start_date",
+                                        "finish_date",
+                                        "points",
+                                        "is_winner",
+                                        "amount_envido",
+                                        "amount_flower"
+                                    ],
+                                    "properties": {
+                                        "player_id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "start_date": {
+                                            "type": "string",
+                                            "example": "2022-01-01"
+                                        },
+                                        "finish_date": {
+                                            "type": "string",
+                                            "example": "2022-01-10"
+                                        },
+                                        "points": {
+                                            "type": "integer",
+                                            "example": "100"
+                                        },
+                                        "is_winner": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "amount_envido": {
+                                            "type": "integer",
+                                            "example": "3"
+                                        },
+                                        "amount_flower": {
+                                            "type": "integer",
+                                            "example": "2"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Error de validación",
@@ -265,7 +419,27 @@
                 "operationId": "a1bbc4e0167d0a5cfa0af05c6c4ce234",
                 "responses": {
                     "200": {
-                        "description": "Lista de jugadores"
+                        "description": "Respuesta exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "admin"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

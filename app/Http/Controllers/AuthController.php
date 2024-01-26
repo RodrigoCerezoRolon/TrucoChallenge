@@ -54,10 +54,15 @@ class AuthController extends Controller
      *             @OA\Property(property="password", type="string", example="password")
      *         )
      *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="Autenticación exitosa"
-     *     ),
+     * @OA\Response(
+     *     response="200",
+     *     description="Respuesta exitosa",
+     *     @OA\JsonContent(
+     *         @OA\Property(property="access_token", type="string", example="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"),
+     *         @OA\Property(property="token_type", type="string", example="bearer"),
+     *         @OA\Property(property="expires_in", type="integer", example=3600)
+     *     )
+     * ),
      *     @OA\Response(
      *         response="401",
      *         description="Error de autenticación"
@@ -125,32 +130,38 @@ class AuthController extends Controller
         ]);
     }
     /**
- * @OA\Post(
- *     path="/api/auth/register",
- *     summary="Registro de usuario",
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             required={"name", "email", "password", "profile_id"},
- *             @OA\Property(property="name", type="string", example="John Doe"),
- *             @OA\Property(property="email", type="email", example="john@example.com"),
- *             @OA\Property(property="password", type="string", example="password"),
- *             @OA\Property(property="profile_id", type="integer", example="1"),
- *         )
- *     ),
- *     @OA\Response(
- *         response="200",
- *         description="Usuario registrado exitosamente",
- *     ),
- *     @OA\Response(
- *         response="422",
- *         description="Error de validación",
- *         @OA\JsonContent(
- *             @OA\Property(property="errors", type="object"),
- *         )
- *     )
- * )
- */
+     * @OA\Post(
+     *     path="/api/auth/register",
+     *     summary="Registro de usuario",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "email", "password", "profile_id"},
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="email", example="john@example.com"),
+     *             @OA\Property(property="password", type="string", example="password"),
+     *             @OA\Property(property="profile_id", type="integer", example="1"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Usuario registrado exitosamente",
+     *               @OA\JsonContent(
+     *             required={"name", "email", "password", "profile_id"},
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="email", example="john@example.com"),
+     *             @OA\Property(property="profile_id", type="integer", example="1"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Error de validación",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object"),
+     *         )
+     *     )
+     * )
+     */
     public function register(Request $request)
     {
 
@@ -183,36 +194,52 @@ class AuthController extends Controller
             'profile_id' => $request->input('profile_id')
         ]);
     }
-  /**
- * @OA\Post(
- *     path="/api/auth/generateReport",
- *     summary="Generar informe de juegos",
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             required={"start_date", "finish_date", "email"},
- *             @OA\Property(property="start_date", type="string", example="2022-01-01"),
- *             @OA\Property(property="finish_date", type="string", example="2022-01-10"),
- *             @OA\Property(property="email", type="email", example="john@example.com"),
- *         )
- *     ),
- *     @OA\Response(
- *         response="200",
- *         description="Informe generado exitosamente",
- *         @OA\JsonContent(
- * @OA\Property(property="report", type="array", @OA\Items(type="object")),
- *             @OA\Property(property="user", type="object"),
- *         )
- *     ),
- *     @OA\Response(
- *         response="422",
- *         description="Error de validación",
- *         @OA\JsonContent(
- *             @OA\Property(property="errors", type="object"),
- *         )
- *     )
- * )
- */
+    /**
+     * @OA\Post(
+     *     path="/api/auth/generateReport",
+     *     summary="Generar informe de juegos",
+     *     @OA\RequestBody(
+     *         required=true,
+     *     @OA\JsonContent(
+     *         @OA\Property(property="report", type="array", @OA\Items(
+     *             @OA\Property(property="id", type="integer", example=78),
+     *             @OA\Property(property="player_id", type="integer", example=8),
+     *             @OA\Property(property="start_date", type="string", example="1999-12-15"),
+     *             @OA\Property(property="finish_date", type="string", example="1993-04-05"),
+     *             @OA\Property(property="points", type="integer", example=1),
+     *             @OA\Property(property="is_winner", type="boolean", example=false),
+     *             @OA\Property(property="amount_envido", type="integer", example=4),
+     *             @OA\Property(property="amount_flower", type="integer", example=3),
+     *             @OA\Property(property="created_at", type="string", example="2024-01-24T23:59:56.000000Z"),
+     *             @OA\Property(property="updated_at", type="string", example="2024-01-24T23:59:56.000000Z")
+     *         )),
+     *         @OA\Property(property="user", type="object",
+     *             @OA\Property(property="id", type="integer", example=8),
+     *             @OA\Property(property="name", type="string", example="admin"),
+     *             @OA\Property(property="email", type="string", example="admin@test.com"),
+     *             @OA\Property(property="profile_id", type="integer", example=2),
+     *             @OA\Property(property="created_at", type="string", example="2024-01-25T00:47:05.000000Z"),
+     *             @OA\Property(property="updated_at", type="string", example="2024-01-25T00:47:05.000000Z")
+     *         )
+     *     )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Informe generado exitosamente",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="report", type="array", @OA\Items(type="object")),
+     *             @OA\Property(property="user", type="object"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Error de validación",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object"),
+     *         )
+     *     )
+     * )
+     */
 
 
     public function generateReport(Request $request)
@@ -243,8 +270,8 @@ class AuthController extends Controller
         $playerSearched = null;
         if ($user && $user->profile_id != 1) {
             $playerSearched = User::where('email', $request->input('email'))->first();
-            if($playerSearched==null){
-                return response()->json(['errors'=>['email'=>['No hay jugador con ese email']]],422);
+            if ($playerSearched == null) {
+                return response()->json(['errors' => ['email' => ['No hay jugador con ese email']]], 422);
             }
             $query->where('player_id', $playerSearched->id);
         }
@@ -258,46 +285,57 @@ class AuthController extends Controller
         ];
     }
     /**
- * @OA\Post(
- *     path="/api/auth/createGame",
- *     summary="Crear nuevo juego",
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             required={"player_id", "start_date", "finish_date", "points", "is_winner", "amount_envido", "amount_flower"},
- *             @OA\Property(property="player_id", type="integer", example="1"),
- *             @OA\Property(property="start_date", type="string", example="2022-01-01"),
- *             @OA\Property(property="finish_date", type="string", example="2022-01-10"),
- *             @OA\Property(property="points", type="integer", example="100"),
- *             @OA\Property(property="is_winner", type="boolean", example="true"),
- *             @OA\Property(property="amount_envido", type="integer", example="3"),
- *             @OA\Property(property="amount_flower", type="integer", example="2"),
- *         )
- *     ),
- *     @OA\Response(
- *         response="200",
- *         description="Juego creado exitosamente",
- *     ),
- *     @OA\Response(
- *         response="422",
- *         description="Error de validación",
- *         @OA\JsonContent(
- *             @OA\Property(property="errors", type="object"),
- *         )
- *     )
- * )
- */
-    public function createGame(Request $request){
+     * @OA\Post(
+     *     path="/api/auth/createGame",
+     *     summary="Crear nuevo juego",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"player_id", "start_date", "finish_date", "points", "is_winner", "amount_envido", "amount_flower"},
+     *             @OA\Property(property="player_id", type="integer", example="1"),
+     *             @OA\Property(property="start_date", type="string", example="2022-01-01"),
+     *             @OA\Property(property="finish_date", type="string", example="2022-01-10"),
+     *             @OA\Property(property="points", type="integer", example="100"),
+     *             @OA\Property(property="is_winner", type="boolean", example="true"),
+     *             @OA\Property(property="amount_envido", type="integer", example="3"),
+     *             @OA\Property(property="amount_flower", type="integer", example="2"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Juego creado exitosamente",
+     *           @OA\JsonContent(
+     *             required={"player_id", "start_date", "finish_date", "points", "is_winner", "amount_envido", "amount_flower"},
+     *             @OA\Property(property="player_id", type="integer", example="1"),
+     *             @OA\Property(property="start_date", type="string", example="2022-01-01"),
+     *             @OA\Property(property="finish_date", type="string", example="2022-01-10"),
+     *             @OA\Property(property="points", type="integer", example="100"),
+     *             @OA\Property(property="is_winner", type="boolean", example="true"),
+     *             @OA\Property(property="amount_envido", type="integer", example="3"),
+     *             @OA\Property(property="amount_flower", type="integer", example="2"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Error de validación",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object"),
+     *         )
+     *     )
+     * )
+     */
+    public function createGame(Request $request)
+    {
         $rules = [
-            'player_id' => 'required|integer',  
-            'start_date' => 'required',   
-            'finish_date' => 'required',  
-            'points' => 'required|integer',  
-            'is_winner' => 'required', 
-            'amount_envido' => 'required|integer',  
-            'amount_flower' => 'required|integer',  
+            'player_id' => 'required|integer',
+            'start_date' => 'required',
+            'finish_date' => 'required',
+            'points' => 'required|integer',
+            'is_winner' => 'required',
+            'amount_envido' => 'required|integer',
+            'amount_flower' => 'required|integer',
         ];
-        
+
         $customMessages = [
             'player_id.required' => 'El campo Jugador es obligatorio.',
             'start_date.required' => 'El campo Fecha Inicio es obligatorio.',
@@ -307,14 +345,14 @@ class AuthController extends Controller
             'amount_envido.required' => 'El campo Envido es obligatorio.',
             'amount_flower.required' => 'El campo Flores es obligatorio.',
         ];
-        
+
         $validator = Validator::make($request->all(), $rules, $customMessages);
-        
-        // Lógica para manejar la validación
+
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         } else {
-            // La validación pasó, procede con la creación del modelo Game
+
             return Game::create([
                 'player_id' => $request->input('player_id'),
                 'start_date' => $request->input('start_date'),
@@ -324,20 +362,32 @@ class AuthController extends Controller
                 'amount_envido' => $request->input('amount_envido'),
                 'amount_flower' => $request->input('amount_flower'),
             ]);
-            
         }
     }
-    /**
+   /**
  * @OA\Get(
  *     path="/api/auth/getPlayers",
  *     summary="Obtener jugadores",
  *     @OA\Response(
  *         response="200",
- *         description="Lista de jugadores",
+ *         description="Respuesta exitosa",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(
+ *                 @OA\Property(property="id", type="integer", example=1),
+ *                 @OA\Property(property="name", type="string", example="admin")
+ *             ),
+ *             @OA\Items(
+ *                 @OA\Property(property="id", type="integer", example=6),
+ *                 @OA\Property(property="name", type="string", example="Kelley Ankunding")
+ *             )
+ *         )
  *     )
  * )
  */
-    public function getPlayers(){
-        return User::select('id','name')->orderby('name',"ASC")->where('profile_id',1)->get();
+
+    public function getPlayers()
+    {
+        return User::select('id', 'name')->orderby('name', "ASC")->where('profile_id', 1)->get();
     }
 }
