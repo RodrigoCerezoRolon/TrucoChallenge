@@ -68,5 +68,3 @@ Visita [http://localhost:8000](http://localhost:8000) en tu navegador para ver l
 - **React:** Biblioteca de JavaScript utilizada para construir la interfaz de usuario.
 - **Swagger:** Herramienta para documentar la API REST.
 - **Vite:** Build tool para el frontend integrado con Laravel.
-
-Este proyecto fue desarrollado con el objetivo de demostrar habilidades en el desarrollo web utilizando tecnologías actuales y mejores prácticas. ¡Esperamos que disfrutes explorando el código!
