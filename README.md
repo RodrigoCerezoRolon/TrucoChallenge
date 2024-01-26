@@ -31,10 +31,12 @@ Asegúrate de tener instalados los siguientes componentes antes de iniciar el pr
     composer install
     ```
 
-4. **Genera la Clave de JWT:**
+4. **Genera la Clave de JWT, Corre las migraciones y Seeders:**
 
     ```bash
     php artisan jwt:secret
+    php artisan migrate
+    php artisan db:seed
     ```
 
 5. **Instala las Dependencias de Node.js:**
@@ -59,11 +61,11 @@ php artisan serve
 
 Visita [http://localhost:8000](http://localhost:8000) en tu navegador para ver la aplicación.
 
-¡Listo! Ahora deberías tener la aplicación Truco ejecutándose en tu entorno local.
+¡Listo! Ahora la aplicación Truco debería estar ejecutándose en tu entorno local.
 
 ## Tecnologías Utilizadas
 
-- **Laravel:** Framework de PHP elegido por su robustez y facilidad de uso.
+- **Laravel:** Framework de PHP elegido por experiencia previa con el framework.
 - **PostgreSQL:** Base de datos relacional utilizada para almacenar los datos de la aplicación.
 - **React:** Biblioteca de JavaScript utilizada para construir la interfaz de usuario.
 - **Swagger:** Herramienta para documentar la API REST.
